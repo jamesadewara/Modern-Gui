@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Calculator</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="../static/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="../static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../static/assets/css/style.css" rel="stylesheet">
+  
+</head>
+
+<style>
+  body{
+    overflow-y:hidden;
+  }
+</style>
+
+<body class="user-select-none overflow-none">
+  <div class="modal fade" id="basicModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-0">
+        <div class="modal-header">
+          <h5 class="modal-title">History</span></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <section class="section dashboard">
+            <div class="activity" id="recents">
+             <!--DYNAMIC-->
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-link text-decoration-none" data-bs-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- End Basic Modal-->
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a class="logo d-flex align-items-center "><span class="d-lg-block fs-5">Calculator</span></a>
+    </div><!-- End Logo -->
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block ">
+          <a class="nav-link nav-icon btn" data-bs-toggle="modal" data-bs-target="#basicModal">
+            <i class="bi bi-clock"></i>
+          </a>
+        </li><!-- End Search Icon-->
+      </ul>
+    </nav>
+  </header><!-- End Header -->
+
+  <main id="main" class="main">
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+          <div class="row">
+            <!-- Calculator -->
+            <div class="col-12">
+              <div class="card  overflow-auto">
+                <div class="card-body pb-0 p-0">
+                  <p class="text-end text-muted p-0" id="calculator-input">0</p>
+                  <input class="w-100 fs-1 text-end border-0 outline-none" placeholder="0" readonly id="calculator-screen"/>
+                  <div class="table-responsive">
+                    <table class="table overflow-scroll">
+                      <thead>
+                        <tr class="text-capitalize">
+                          <th scope="col" class="w-auto p-1 m-1">
+                            
+                          </th>
+                          <th scope="col" class="w-auto p-1 m-1">
+                            
+                          </th>
+                          <th scope="col" class="w-auto p-1 m-1">
+                            
+                          </th>
+                          <th scope="col" class="w-auto p-1 m-1">
+                            
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody id="btn-layout">
+                        <!--dynamically geerate the btns using js-->
+                
+                        <tr class="text-nowrap">
+                          <td class="w-auto p-1">
+                            <button class="operator btn btn-light w-100 rounded-0 fw-bold fs-3" onclick="percentage('*(1/100)','%')">%</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" onclick="clearValues()">C</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" onclick="deleteValue()">DEL</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="operator btn btn-white w-100 rounded-0 fw-bold fs-3" value="/" onclick="updateCalculations('/','÷')">&divide;</button>
+                          </td>
+                        </tr>
+                        <tr class="text-nowrap">
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="7" onclick="updateCalculations(7,7)">7</button>
+                          </td><td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" value="8" onclick="updateCalculations(8,8)">8</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="9" onclick="updateCalculations(9,9)">9</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="operator btn btn-white w-100 rounded-0 fw-bold fs-3" value="*" onclick="updateCalculations('*','×')">&times;</button>
+                          </td>
+                        </tr>
+                        <tr class="text-nowrap">
+                          <td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" value="4" onclick="updateCalculations(4,4)">4</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="5" onclick="updateCalculations(5,5)">5</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="6" onclick="updateCalculations(6,6)">6</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="operator btn btn-white w-100 rounded-0 fw-bold fs-3" value="-" onclick="updateCalculations('-','-')">-</button>
+                          </td>
+                        </tr>
+                        <tr class="text-nowrap">
+                          <td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" value="3" onclick="updateCalculations(3,3)">3</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="2" onclick="updateCalculations(2,2)">2</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="1" onclick="updateCalculations(1,1)">1</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="operator btn btn-white w-100 rounded-0 fw-bold fs-3" value="+" onclick="updateCalculations('+','+')">+</button>
+                          </td>
+                        </tr>
+                        <tr class="text-nowrap">
+                          <td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" onclick="updateCalculations('*(-1)','±')">±</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-white w-100 rounded-0 fw-bold fs-3" value="0" onclick="updateCalculations(0,0)">0</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class="btn btn-light w-100 rounded-0 fw-bold fs-3" value="." onclick="updateCalculations('.','.')">.</button>
+                          </td>
+                          <td class="w-auto p-1">
+                            <button class=" operator btn btn-light w-100 rounded-0 fw-bold fs-3" onclick="equalsTo()">=</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div><!-- End Calculator -->
+            </div>
+          </div>
+        </div><!-- End Left side columns -->
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/quill/quill.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="C:/Users/user/Desktop/Modern Gui/Calculator/views.js"></script>
+  <script src="C:/Users/user/Desktop/Modern Gui/Calculator/utils.js"></script>
+  
+
+  <script src="../static/assets/js/main.js"></script>
+
+</body>
+
+</html>
